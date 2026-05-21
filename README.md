@@ -34,7 +34,7 @@ Import the CSS styles and register components individually or globally in your V
 Import the CSS styles in your main entry file (e.g., `main.ts` or `app.vue`):
 
 ```typescript
-import 'overlayer-ui/dist/style.css'
+import 'overlayer-ui/dist/overlayer-ui.css'
 ```
 
 ### 2. Basic Component Usage
