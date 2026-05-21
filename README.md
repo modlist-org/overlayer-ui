@@ -167,4 +167,4 @@ A customizable dropdown menu supporting generic item types.
 
 ## License
 
-MIT
+GPLv3

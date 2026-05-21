@@ -1,6 +1,7 @@
 {
   "name": "overlayer-ui",
   "version": "1.0.0",
+  "license": "GPL-3.0-only",
   "type": "module",
   "main": "./dist/overlayer-ui.umd.js",
   "module": "./dist/overlayer-ui.mjs",
