@@ -47,6 +47,7 @@ const props = defineProps<{
   label?: string
   format?: string
   blocked?: boolean
+  fontSize?: number
 }>()
 
 const emit = defineEmits<{
@@ -55,6 +56,7 @@ const emit = defineEmits<{
 
 const { state } = useOverlayerState()
 const containerRef = ref<HTMLDivElement | null>(null)
+const fontSizeStyle = computed(() => `${props.fontSize || state.fontSize || 24}px`)
 const isDragging = ref(false)
 
 const percent = computed(() => {
@@ -250,7 +252,7 @@ onBeforeUnmount(() => {
 
 .slider-label {
   font-family: 'SUIT', sans-serif;
-  font-size: 24px;
+  font-size: v-bind(fontSizeStyle);
   font-weight: 400;
   color: #ffffff;
   padding-left: 4px;
@@ -258,7 +260,7 @@ onBeforeUnmount(() => {
 
 .slider-value {
   font-family: 'SUIT', sans-serif;
-  font-size: 24px;
+  font-size: v-bind(fontSizeStyle);
   font-weight: 400;
   color: #ffffff;
   padding-right: 4px;

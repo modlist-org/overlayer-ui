@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="containerRef"
     class="overlayer-dropdown"
     :class="{ 'is-expanded': isExpanded, 'is-blocked': blocked }"
     @contextmenu.prevent
@@ -52,7 +53,7 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useOverlayerState } from '../composables/useOverlayerState'
 
 const props = defineProps<{
@@ -61,6 +62,7 @@ const props = defineProps<{
   values: T[] | readonly T[]
   display: (item: T) => string
   blocked?: boolean
+  fontSize?: number
 }>()
 
 const emit = defineEmits<{
@@ -69,11 +71,14 @@ const emit = defineEmits<{
 
 const { state } = useOverlayerState()
 const isExpanded = ref(false)
+const containerRef = ref<HTMLElement | null>(null)
 
 const isChanged = computed(() => {
   if (props.defaultValue === null || props.defaultValue === undefined) return false
   return props.modelValue !== props.defaultValue
 })
+
+const fontSizeStyle = computed(() => `${props.fontSize || state.fontSize || 24}px`)
 
 const toggle = () => {
   if (props.blocked) return
@@ -94,13 +99,27 @@ const handleMouseDown = (e: MouseEvent) => {
     }
   }
 }
+
+const handleClickOutside = (event: MouseEvent) => {
+  if (isExpanded.value && containerRef.value && !containerRef.value.contains(event.target as Node)) {
+    isExpanded.value = false
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
 </script>
 
 <style scoped>
 .overlayer-dropdown {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 12px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -157,7 +176,7 @@ const handleMouseDown = (e: MouseEvent) => {
 /* Current selection label */
 .selected-label {
   font-family: 'SUIT', sans-serif;
-  font-size: 24px;
+  font-size: v-bind(fontSizeStyle);
   font-weight: 400;
   color: #ffffff;
   overflow: hidden;
@@ -188,12 +207,20 @@ const handleMouseDown = (e: MouseEvent) => {
 
 /* Dropdown list */
 .dropdown-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 100;
   display: flex;
   flex-direction: column;
   background-color: #3C3A4B; /* UIColors.ObjectBG */
   border-radius: 8px;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-y: auto;
+  max-height: 250px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .dropdown-row {
@@ -202,7 +229,7 @@ const handleMouseDown = (e: MouseEvent) => {
   height: 50px;
   padding: 0 16px;
   font-family: 'SUIT', sans-serif;
-  font-size: 24px;
+  font-size: v-bind(fontSizeStyle);
   font-weight: 400;
   color: #ffffff;
   cursor: pointer;

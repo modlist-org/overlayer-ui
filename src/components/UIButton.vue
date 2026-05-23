@@ -10,15 +10,22 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useOverlayerState } from '../composables/useOverlayerState'
 
 const props = defineProps<{
   label?: string
   blocked?: boolean
+  fontSize?: number
 }>()
 
 const emit = defineEmits<{
   (e: 'click'): void
 }>()
+
+const { state } = useOverlayerState()
+
+const fontSizeStyle = computed(() => `${props.fontSize || state.fontSize || 24}px`)
 
 const handleClick = () => {
   if (props.blocked) return
@@ -36,7 +43,7 @@ const handleClick = () => {
   background-color: #6C78FF; /* Figma Reload Button BG */
   color: #ffffff;
   font-family: 'SUIT', sans-serif;
-  font-size: 24px; /* Figma: 24 */
+  font-size: v-bind(fontSizeStyle);
   font-weight: 400; /* Figma: Regular */
   border: none;
   border-radius: 8px;

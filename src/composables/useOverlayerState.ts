@@ -8,6 +8,7 @@ export interface OverlayerSettings {
   middleClickToDefault: boolean
   uiScale: number
   showAutoplayJudgment: boolean
+  fontSize: number
 }
 
 export const DEFAULTS: Readonly<OverlayerSettings> = {
@@ -18,6 +19,7 @@ export const DEFAULTS: Readonly<OverlayerSettings> = {
   middleClickToDefault: true,
   uiScale: 1.0,
   showAutoplayJudgment: false,
+  fontSize: 24,
 }
 
 // Global reactive state instance
