@@ -46,6 +46,7 @@ const props = defineProps<{
   label?: string
   blocked?: boolean
   fontSize?: number
+  disableReset?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -73,7 +74,7 @@ const toggle = () => {
 const handleMouseDown = (e: MouseEvent) => {
   if (props.blocked) return
   if (e.button === 1) { // Middle click
-    if (state.middleClickToDefault && props.modelValue !== props.defaultValue) {
+    if (state.middleClickToDefault && props.modelValue !== props.defaultValue && !props.disableReset) {
       emit('update:modelValue', props.defaultValue)
     }
   }

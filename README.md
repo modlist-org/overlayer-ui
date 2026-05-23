@@ -142,6 +142,7 @@ A checkbox/toggle element showcasing a custom hollow/filled circle animation.
   - `defaultValue`: `boolean` (Required) - Used to check if value changed.
   - `label`: `string` (Optional) - Display label.
   - `blocked`: `boolean` (Default: `false`) - Disable interactions.
+  - `disableReset`: `boolean` (Default: `false`) - Disable middle-click reset.
 
 ### `UISlider`
 A precision slider for selecting numeric scales or values. Supports middle-click reset.
@@ -153,6 +154,7 @@ A precision slider for selecting numeric scales or values. Supports middle-click
   - `label`: `string` (Optional) - Display label.
   - `format`: `'0.00x'` | `undefined` - Value formatting preset.
   - `blocked`: `boolean` (Default: `false`) - Disable interactions.
+  - `disableReset`: `boolean` (Default: `false`) - Disable middle-click reset.
 
 ### `UIDropdown`
 A customizable dropdown menu supporting generic item types.
@@ -162,6 +164,7 @@ A customizable dropdown menu supporting generic item types.
   - `values`: `T[] | readonly T[]` (Required) - List of selectable options.
   - `display`: `(item: T) => string` (Required) - Mapping function to convert items to labels.
   - `blocked`: `boolean` (Default: `false`) - Disable interactions.
+  - `disableReset`: `boolean` (Default: `false`) - Disable middle-click reset.
 
 ---
 

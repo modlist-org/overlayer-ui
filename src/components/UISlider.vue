@@ -48,6 +48,7 @@ const props = defineProps<{
   format?: string
   blocked?: boolean
   fontSize?: number
+  disableReset?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -97,7 +98,7 @@ const updateValueFromCoords = (clientX: number) => {
 const handleMouseDown = (e: MouseEvent) => {
   if (props.blocked) return
   if (e.button === 1) { // Middle click
-    if (state.middleClickToDefault && isChanged.value) {
+    if (state.middleClickToDefault && isChanged.value && !props.disableReset) {
       emit('update:modelValue', props.defaultValue)
       emit('complete', props.defaultValue)
     }

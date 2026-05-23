@@ -63,6 +63,7 @@ const props = defineProps<{
   display: (item: T) => string
   blocked?: boolean
   fontSize?: number
+  disableReset?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -93,7 +94,7 @@ const selectItem = (item: T) => {
 const handleMouseDown = (e: MouseEvent) => {
   if (props.blocked) return
   if (e.button === 1) { // Middle click
-    if (state.middleClickToDefault && isChanged.value) {
+    if (state.middleClickToDefault && isChanged.value && !props.disableReset) {
       emit('update:modelValue', props.defaultValue)
       isExpanded.value = false
     }
