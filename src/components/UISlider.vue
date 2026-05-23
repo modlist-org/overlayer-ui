@@ -68,6 +68,7 @@ const percent = computed(() => {
 })
 
 const isChanged = computed(() => {
+  if (props.disableReset) return false
   return Math.abs(props.modelValue - props.defaultValue) > 0.0001
 })
 

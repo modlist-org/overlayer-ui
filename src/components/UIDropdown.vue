@@ -75,6 +75,7 @@ const isExpanded = ref(false)
 const containerRef = ref<HTMLElement | null>(null)
 
 const isChanged = computed(() => {
+  if (props.disableReset) return false
   if (props.defaultValue === null || props.defaultValue === undefined) return false
   return props.modelValue !== props.defaultValue
 })

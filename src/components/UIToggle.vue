@@ -58,6 +58,7 @@ const fontSizeStyle = computed(() => `${props.fontSize || state.fontSize || 24}p
 const isAnimating = ref(false)
 
 const isChanged = computed(() => {
+  if (props.disableReset) return false
   return props.modelValue !== props.defaultValue
 })
 
