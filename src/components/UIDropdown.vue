@@ -37,7 +37,7 @@
     </div>
 
     <!-- Dropdown Options List -->
-    <transition name="expand">
+    <transition :css="false" v-bind="expandHooks">
       <div v-if="isExpanded" class="dropdown-list">
         <div
           v-for="(item, idx) in values"
@@ -55,6 +55,7 @@
 <script setup lang="ts" generic="T">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useOverlayerState } from '../composables/useOverlayerState'
+import { expandHooks } from '../composables/useExpandTransition'
 
 const props = defineProps<{
   modelValue: T
@@ -199,7 +200,8 @@ onBeforeUnmount(() => {
   width: 30px; /* Figma: ~30px */
   height: 30px; /* Figma: ~30px */
   color: #F3F4FF; /* Figma Down Arrow Color */
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.2s ease-out;
+  /* O5Kit: rotation 0.4s OutBack, tint 0.2s OutSine */
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s cubic-bezier(0.61, 1, 0.88, 1);
 }
 
 .triangle-icon.is-expanded {
@@ -237,25 +239,11 @@ onBeforeUnmount(() => {
   cursor: pointer;
   user-select: none;
   background-color: transparent;
-  transition: background-color 0.12s ease-out;
+  transition: background-color 0.12s cubic-bezier(0.61, 1, 0.88, 1);
 }
 
 .dropdown-row:hover {
   background-color: #919AFF; /* UIColors.ObjectActive */
-}
-
-/* Height expansion transitions */
-.expand-enter-active,
-.expand-leave-active {
-  transition: max-height 0.16s ease-out, opacity 0.16s ease-out;
-  max-height: 500px;
-  overflow: hidden;
-}
-
-.expand-enter-from,
-.expand-leave-to {
-  max-height: 0 !important;
-  opacity: 0;
 }
 
 /* Fades */
